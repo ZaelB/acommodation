@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            flex: 1;
+        }
+
+        .home-button {
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 12px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        .home-button:hover {
+            background-color: #555;
+        }
+
+        .content {
+            display: flex;
+            flex: 1;
+        }
+
+        #sidebar {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+
+        .apartment {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .apartment img {
+            max-width: 100%;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        #map {
+            flex: 2;
+            height: 100vh;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Apartments</h1>
+        <a href="index.html" class="home-button">Home</a>
+        <!-- Add any other buttons or navigation elements here -->
+    </header>
+    <div class="content">
+        <div id="sidebar">
+            <div class="apartment">
+                <h2>Apartment Unit A</h2>
+                <img src="https://via.placeholder.com/400x250.png?text=Apartment+Unit+A" alt="Apartment Unit A">
+                <p>
+                    <strong>Price:</strong> $1,500/month<br>
+                    <strong>Address:</strong> 123 Main St, New York, NY<br>
+                    <strong>Description:</strong> Spacious apartment with modern amenities.
+                </p>
+            </div>
+            <div class="apartment">
+                <h2>Apartment Unit B</h2>
+                <img src="https://via.placeholder.com/400x250.png?text=Apartment+Unit+B" alt="Apartment Unit B">
+                <p>
+                    <strong>Price:</strong> $2,000/month<br>
+                    <strong>Address:</strong> 456 Elm St, New York, NY<br>
+                    <strong>Description:</strong> Cozy apartment with a great view of the city.
+                </p>
+            </div>
+            <div class="apartment">
+                <h2>Apartment Unit C</h2>
+                <img src="https://via.placeholder.com/400x250.png?text=Apartment+Unit+C" alt="Apartment Unit C">
+                <p>
+                    <strong>Price:</strong> $1,800/month<br>
+                    <strong>Address:</strong> 789 Oak St, New York, NY<br>
+                    <strong>Description:</strong> Modern apartment with excellent amenities.
+                </p>
+            </div>
+            <!-- Add more apartments as needed -->
+        </div>
+        <div id="map"></div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Apartment Listings. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([40.7128, -74.0060], 12); // New York City coordinates
+
+        // Add OpenStreetMap as the base layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Define an array of random zone coordinates with descriptions
+        var zones = [
+            {
+                coordinates: [40.7058316, -74.0131774],
+                description: `
+                    <h2>Apartment Unit A</h2>
+                    <img src="https://via.placeholder.com/400x250.png?text=Apartment+Unit+A" alt="Apartment Unit A">
+                    <p>
+                        <strong>Price:</strong> $1,500/month<br>
+                        <strong>Address:</strong> 123 Main St, New York, NY<br>
+                        <strong>Description:</strong> Spacious apartment with modern amenities.
+                    </p>
+                `
+            },
+            {
+                coordinates: [40.7251774, -73.9903697],
+                description: `
+                    <h2>Apartment Unit B</h2>
+                    <img src="https://via.placeholder.com/400x250.png?text=Apartment+Unit+B" alt="Apartment Unit B">
+                    <p>
+                        <strong>Price:</strong> $2,000/month<br>
+                        <strong>Address:</strong> 456 Elm St, New York, NY<br>
+                        <strong>Description:</strong> Cozy apartment with a great view of the city.
+                    </p>
+                `
+            },
+            {
+                coordinates: [40.7410295, -74.0031889],
+                description: `
+                    <h2>Apartment Unit C</h2>
+                    <img src="https://via.placeholder.com/400x250.png?text=Apartment+Unit+C" alt="Apartment Unit C">
+                    <p>
+                        <strong>Price:</strong> $1,800/month<br>
+                        <strong>Address:</strong> 789 Oak St, New York, NY<br>
+                        <strong>Description:</strong> Modern apartment with excellent amenities.
+                    </p>
+                `
+            }
+            // Add more zones with coordinates and descriptions as needed
+        ];
+
+        // Add markers for each zone to the map
+        zones.forEach(function(zone) {
+            var marker = L.marker(zone.coordinates).addTo(map);
+            marker.bindPopup(zone.description, { maxWidth: 400 }); // Add a pop-up with the zone description
+        });
+    </script>
+</body>
+</html>
